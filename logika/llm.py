@@ -1,9 +1,18 @@
 from langchain_gigachat.chat_models import GigaChat
 from langchain.messages import HumanMessage, AIMessage, SystemMessage
+import yaml
+
+def get_yaml():
+    with open('autorization.yaml', 'r') as f:
+        config = yaml.safe_load(f)
+        return config['token']
+
+token = get_yaml()
+
 
 model = GigaChat(
     # Для авторизации запросов используйте ключ, полученный в проекте GigaChat API
-    credentials="ZTQxNGY5OTYtOGE2NS00OWQxLTk2YWQtMTI3NWRhYmQxOTc0OjUyNWFlODVkLWY1Y2MtNDEwNy05MWE0LTdhOGI1MGZhY2FlOA==",
+    credentials=token,
     verify_ssl_certs=False,
 )
 
