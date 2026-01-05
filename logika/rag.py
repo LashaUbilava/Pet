@@ -4,9 +4,13 @@ from langchain_core.retrievers import BaseRetriever
 from langchain_core.documents import Document
 from pydantic import PrivateAttr
 
-def get_yaml():
+def get_yaml_values():
     with open('autorization.yaml', 'r') as f:
         return yaml.safe_load(f)['key']
+
+def get_yaml_values_org():
+    with open('autorization.yaml', 'r') as f:
+        return yaml.safe_load(f)['org']
 
 class LlamaCloudLangChainRetriever(BaseRetriever):
     """Адаптер для LlamaCloudIndex под LangChain LCEL."""
@@ -36,11 +40,12 @@ class LlamaCloudLangChainRetriever(BaseRetriever):
 #os.environ['LLAMA_CLOUD_API_KEY'] = key 
 
 def get_llama_retriever():
-    key = get_yaml()
+    key = get_yaml_values()
+    org = get_yaml_values_org()
     index = LlamaCloudIndex(
     name="MyIndex",
     project_name="Default",
-    organization_id="b0bf9943-4825-46fe-be29-8ad95b6cff0b",
+    organization_id=org,
     api_key=key,
     )
 
